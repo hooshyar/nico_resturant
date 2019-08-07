@@ -6,6 +6,7 @@ import 'package:nico_resturant/src/services/bottom_nav_model.dart';
 import 'package:nico_resturant/src/services/db.dart';
 import 'package:nico_resturant/src/services/fetch_data.dart';
 import 'package:nico_resturant/src/style/style.dart';
+import 'package:nico_resturant/src/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -51,47 +52,47 @@ class _HomeWidgetState extends State<HomeWidget> {
               flex: 1,
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: FutureBuilder(
-                        future: Provider.of<FetchModel>(context).fetchFoods(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData) {
-                            return LinearProgressIndicator();
-                          } else {
-                            return PageView.builder(
-//                                controller: _pageController,
-//                                pageSnapping: true,
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  Food doc = snapshot.data[index];
-//                      var _foodItem = Food.fromSnapshot(doc);
-                                  return Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      child: CachedNetworkImage(
-                                          fit: BoxFit.fitHeight,
-                                          imageUrl: doc.imageUrl,
-                                          placeholder: (context, url) =>
-                                              Container(
-                                                height: 200,
-                                                child:
-                                                    LinearProgressIndicator(),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              new Icon(Icons.error)),
-                                    ),
-                                  );
-                                });
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(),
+//                  Expanded(
+//                    flex: 1,
+//                    child: Container(
+//                      child: FutureBuilder(
+//                        future: Provider.of<FetchModel>(context).fetchFoods(),
+//                        builder: (context, AsyncSnapshot snapshot) {
+//                          if (!snapshot.hasData) {
+//                            return LinearProgressIndicator();
+//                          } else {
+//                            return PageView.builder(
+////                                controller: _pageController,
+////                                pageSnapping: true,
+//                                itemCount: snapshot.data.length,
+//                                itemBuilder: (context, index) {
+//                                  Food doc = snapshot.data[index];
+////                      var _foodItem = Food.fromSnapshot(doc);
+//                                  return Container(
+//                                    padding: EdgeInsets.all(10.0),
+//                                    child: ClipRRect(
+//                                      borderRadius:
+//                                          BorderRadius.all(Radius.circular(20)),
+//                                      child: CachedNetworkImage(
+//                                          fit: BoxFit.fitHeight,
+//                                          imageUrl: doc.imageUrl,
+//                                          placeholder: (context, url) =>
+//                                              Container(
+//                                                height: 200,
+//                                                child:
+//                                                    LinearProgressIndicator(),
+//                                              ),
+//                                          errorWidget: (context, url, error) =>
+//                                              new Icon(Icons.error)),
+//                                    ),
+//                                  );
+//                                });
+//                          }
+//                        },
+//                      ),
+//                    ),
+//                  ),
+//                  VerticalDivider(),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -156,31 +157,79 @@ _buildStoryPage(Food food, bool active) {
   // Animated Properties
   final double blur = active ? 30 : 0;
   final double offset = active ? 20 : 0;
-  final double top = active ? 100 : 200;
+  final double top = active ? 25 : 75;
 
-  return AnimatedContainer(
-    duration: Duration(milliseconds: 500),
-    curve: Curves.easeOutQuint,
-    margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(food.imageUrl),
+  return Stack(
+    children: <Widget>[
+      Container(
+        height: 400,
+        child: AnimatedContainer(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: food.imageUrl,
+                placeholder: (context, str) => LinearProgressIndicator()),
+          ),
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeOutQuint,
+          margin: EdgeInsets.only(top: top, bottom: 50, right: 30),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black87,
+                    blurRadius: blur,
+                    offset: Offset(offset, offset))
+              ]),
         ),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black87,
-              blurRadius: blur,
-              offset: Offset(offset, offset))
-        ]),
+      ),
+      Align(
+        heightFactor: 3.5,
+        widthFactor: 2,
+        alignment: Alignment.bottomCenter,
+        child: Container(
+//          alignment: Alignment.bottomCenter,
+          width: 350, height: 130,
+          child: globalCard(
+              margin: EdgeInsets.only(right: 50, left: 20, bottom: 10, top: 30),
+              bgColor: mainColor,
+              child: Container(
+                child: Text(
+                  food.foodName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black),
+                ),
+              )),
+        ),
+      ),
+      //todo starts
+      Align(
+        heightFactor: 0.7,
+        widthFactor: 1,
+//        alignment: Alignment.bottomCenter,
+        child: Container(
+//          alignment: Alignment.bottomCenter,
+          width: 350, height: 100,
+          child: globalCard(
+              margin: EdgeInsets.only(right: 50, left: 20, bottom: 10, top: 30),
+              child: Container(
+                //todo here goes the starts
+                child: Text(
+                  food.foodName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black),
+                ),
+              )),
+        ),
+      ),
+    ],
   );
 }
 
 Widget theCardList(
     {theJob = 'fdasfd', theCustomer = 'customerName', thePrice = '2000'}) {
   return Container(
-//                          height: 50,
       margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
