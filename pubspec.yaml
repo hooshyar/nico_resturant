@@ -17,7 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  fluro: ^1.5.1
   cached_network_image: ^1.1.1
+  smooth_star_rating: ^1.0.3
   image_picker: ^0.6.1
   google_sign_in:
   firebase_core:
@@ -31,9 +33,6 @@ dependencies:
   intl: ^0.15.8
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
@@ -54,6 +53,20 @@ flutter:
 
   assets:
     - lib/assets/
+    - lib/assets/images/menu1.png
+    - lib/assets/images/menu2.png
+    - lib/assets/images/menu3.png
+    - lib/assets/images/menu4.png
+    - lib/assets/images/menu5.png
+    - lib/assets/images/menu7.png
+    - lib/assets/images/menu8.png
+    - lib/assets/images/menu9.png
+    - lib/assets/images/menu10.png
+    - lib/assets/images/menu11.png
+    - lib/assets/images/menu12.png
+    - lib/assets/images/menu13.png
+    - lib/assets/images/menu14.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -71,11 +84,24 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
   fonts:
-    - family: Noto Kufi Arabic
+    - family: fontello
       fonts:
-        - asset: lib/assets/fonts/NotoKufiArabic-Bold.ttf
-        - asset: lib/assets/fonts/NotoKufiArabic-Regular.ttf
+        - asset: lib/assets/fonts/fontello.ttf
+    - family: Dosis
+      fonts:
+        - asset: lib/assets/fonts/Dosis/Dosis-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Dosis/Dosis-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Dosis/Dosis-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/Dosis/Dosis-Bold.ttf
+          weight: 800
+        - asset: lib/assets/fonts/Dosis/Dosis-ExtraBold.ttf
+          weight: 900
+
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nico_resturant/src/config/config.dart';
 import 'package:nico_resturant/src/models/resturant_model.dart';
+import 'package:nico_resturant/src/screen/pager.dart';
 import 'package:nico_resturant/src/services/bottom_nav_model.dart';
 import 'package:nico_resturant/src/services/db.dart';
-import 'package:nico_resturant/src/services/fetch_data.dart';
 import 'package:nico_resturant/src/style/style.dart';
 import 'package:nico_resturant/src/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +36,6 @@ class _HomeWidgetState extends State<HomeWidget> {
           currentPage = next;
         });
       }
-//      super.initState();
     });
   }
 
@@ -44,111 +43,46 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     final bottomNavIndex = Provider.of<BottomNav>(context);
     return Container(
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: <Widget>[
-//                  Expanded(
-//                    flex: 1,
-//                    child: Container(
-//                      child: FutureBuilder(
-//                        future: Provider.of<FetchModel>(context).fetchFoods(),
-//                        builder: (context, AsyncSnapshot snapshot) {
-//                          if (!snapshot.hasData) {
-//                            return LinearProgressIndicator();
-//                          } else {
-//                            return PageView.builder(
-////                                controller: _pageController,
-////                                pageSnapping: true,
-//                                itemCount: snapshot.data.length,
-//                                itemBuilder: (context, index) {
-//                                  Food doc = snapshot.data[index];
-////                      var _foodItem = Food.fromSnapshot(doc);
-//                                  return Container(
-//                                    padding: EdgeInsets.all(10.0),
-//                                    child: ClipRRect(
-//                                      borderRadius:
-//                                          BorderRadius.all(Radius.circular(20)),
-//                                      child: CachedNetworkImage(
-//                                          fit: BoxFit.fitHeight,
-//                                          imageUrl: doc.imageUrl,
-//                                          placeholder: (context, url) =>
-//                                              Container(
-//                                                height: 200,
-//                                                child:
-//                                                    LinearProgressIndicator(),
-//                                              ),
-//                                          errorWidget: (context, url, error) =>
-//                                              new Icon(Icons.error)),
-//                                    ),
-//                                  );
-//                                });
-//                          }
-//                        },
-//                      ),
-//                    ),
+      child: Column(children: <Widget>[
+        Expanded(
+          child: MenuPager(),
+
+//          child: Row(
+//            children: <Widget>[
+//              Expanded(
+//                flex: 1,
+//                child: Container(
+//                  child: FutureBuilder(
+//                    future: Provider.of<FetchModel>(context).fetchFoods(),
+//                    builder: (context, AsyncSnapshot snapshot) {
+//                      if (!snapshot.hasData) {
+//                        return LinearProgressIndicator();
+//                      } else {
+//                        return PageView.builder(
+//                            controller: _pageController,
+//                            itemCount: snapshot.data.length,
+//                            itemBuilder: (context, index) {
+//                              Food doc = snapshot.data[index];
+//                              bool active;
+//
+//                              active = index == currentPage;
+//                              return _buildStoryPage(doc, active);
+//                            });
+//                      }
+//                    },
 //                  ),
-//                  VerticalDivider(),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: FutureBuilder(
-                        future: Provider.of<FetchModel>(context).fetchFoods(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData) {
-                            return LinearProgressIndicator();
-                          } else {
-                            return PageView.builder(
-                                controller: _pageController,
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  Food doc = snapshot.data[index];
-                                  bool active;
-
-                                  active = index == currentPage;
-
-//                      var _foodItem = Food.fromSnapshot(doc);
-//                                  return Container(
-//                                    padding: EdgeInsets.all(10.0),
-//                                    child: ClipRRect(
-//                                      borderRadius:
-//                                          BorderRadius.all(Radius.circular(20)),
-//                                      child: CachedNetworkImage(
-//                                          fit: BoxFit.fitHeight,
-//                                          imageUrl: doc.imageUrl,
-//                                          placeholder: (context, url) =>
-//                                              Container(
-//                                                height: 200,
-//                                                child:
-//                                                    LinearProgressIndicator(),
-//                                              ),
-//                                          errorWidget: (context, url, error) =>
-//                                              new Icon(Icons.error)),
-//                                    ),
-//                                  );
-                                  return _buildStoryPage(doc, active);
-                                });
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                color: mainColor,
-              ),
-            ),
-          ],
+//                ),
+//              ),
+//            ],
+//          ),
         ),
-      ),
+//        Expanded(
+//          flex: 1,
+//          child: Container(
+//            color: mainColor,
+//          ),
+//        ),
+      ]),
     );
   }
 }

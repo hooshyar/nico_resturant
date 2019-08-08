@@ -235,17 +235,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-//  Widget theAssociatedPage(int index) {
-//    return PageView(
-//      controller:_pageController,
-//      children: <Widget>[
-//
-//    }
-//      ],
-//    );
-////    return _widgetOptions.elementAt(index);
-//  }
-
   Widget theEndDrawer() {
     return Container(
       height: 500,
