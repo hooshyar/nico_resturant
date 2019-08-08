@@ -135,7 +135,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 130,
                     child: SafeArea(
                       child: Row(
-
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Expanded(
