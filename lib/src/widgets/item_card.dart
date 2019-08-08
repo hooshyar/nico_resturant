@@ -116,7 +116,7 @@ class _ItemCardState extends State<ItemCard> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      padding: EdgeInsets.only(top: 6, bottom: 6),
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: CartButton(
                           counter: widget.food.quantity,
                           addToCart: () {

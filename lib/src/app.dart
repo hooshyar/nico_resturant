@@ -121,8 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ///Disable going back
       onWillPop: () async => false,
       child: Container(
-        decoration:
-            BoxDecoration(gradient: mainGradientColor, color: Colors.white10),
+//        decoration:
+//            BoxDecoration(gradient: mainGradientColor, color: Colors.white10),
         child: Scaffold(
             key: scaffoldKey,
 //            endDrawer: theEndDrawer(),
@@ -135,6 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 130,
                     child: SafeArea(
                       child: Row(
+
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Expanded(
@@ -167,23 +168,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )),
             bottomNavigationBar: BottomNavigationBar(
-              unselectedItemColor: Colors.grey[800],
+              backgroundColor: secondColor,
+              unselectedFontSize: 0,
+              selectedFontSize: 16,
+              iconSize: 32,
+              unselectedItemColor: Colors.grey[600],
               elevation: 5,
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text('Home'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.attach_money),
+                  icon: Icon(FontAwesomeIcons.utensils),
                   title: Text('Food'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.money_off),
-                  title: Text('Expense'),
+                  icon: Icon(FontAwesomeIcons.cheese),
+                  title: Text('Appetizer'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
+                  icon: Icon(FontAwesomeIcons.wineGlassAlt),
+                  title: Text('Drink'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(FontAwesomeIcons.carrot),
                   title: Text('Products'),
                 ),
               ],
