@@ -295,12 +295,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 itemBuilder: (context, index, animation) {
                                   CartItem _theItem =
                                       _theCart.listOfCartItems[index];
-
                                   return _buildItem(
                                       context, _theItem, animation);
-                                })
-                            //todo cart as child
-                            ),
+                                })),
                       ),
                     ],
                   ),
@@ -323,14 +320,22 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(
               margin: EdgeInsets.all(10),
               color: Colors.black38,
-              child: Column(
+              child: Stack(
                 children: <Widget>[
-                  Image(
-                    image: AssetImage(item.itemImage),
-                    height: 100.0,
-                    width: 100.0,
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(FontAwesomeIcons.windowClose),
                   ),
-                  Text(item.foodName),
+                  Column(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(item.itemImage),
+                        height: 100.0,
+                        width: 100.0,
+                      ),
+                      Text(item.foodName),
+                    ],
+                  ),
                 ],
               )),
         ),
