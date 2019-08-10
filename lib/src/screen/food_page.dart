@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nico_resturant/src/models/product_model.dart';
+import 'package:nico_resturant/src/screen/pager.dart';
 import 'package:nico_resturant/src/services//loading_model.dart';
 import 'package:nico_resturant/src/services/db.dart';
 import 'package:provider/provider.dart';
@@ -9,12 +10,12 @@ DateTime theDate;
 Product theFreakingProduct;
 num theCalDebt;
 
-class FoodPage extends StatefulWidget {
+class AppetizerPage extends StatefulWidget {
   @override
-  _FoodPageState createState() => _FoodPageState();
+  _AppetizerPageState createState() => _AppetizerPageState();
 }
 
-class _FoodPageState extends State<FoodPage> {
+class _AppetizerPageState extends State<AppetizerPage> {
   String chosenTimeValueFood = 'Today';
   final db = DatabaseService();
   @override
@@ -28,9 +29,14 @@ class _FoodPageState extends State<FoodPage> {
   Widget build(BuildContext context) {
     var _theLoading = Provider.of<LoadingModel>(context).isLoading;
 
-    return Container(
-      child: Text('Food'),
-      padding: EdgeInsets.only(top: 10),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            child: MenuPager(),
+          ),
+        ),
+      ],
     );
   }
 }

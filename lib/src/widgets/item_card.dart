@@ -1,16 +1,17 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:nico_resturant/src/models/cart_model.dart';
 import 'package:nico_resturant/src/models/food.dart';
+import 'package:nico_resturant/src/services/cart.dart';
 import 'package:nico_resturant/src/widgets/cart_button.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ItemCard extends StatefulWidget {
-  const ItemCard({this.food, this.increment, this.decrement});
+  const ItemCard({this.food});
 
-  final NicoFood food;
-  final VoidCallback increment;
-  final VoidCallback decrement;
+  final NicoItem food;
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -20,6 +21,7 @@ class _ItemCardState extends State<ItemCard> {
   var _rating = 5.0;
   @override
   Widget build(BuildContext context) {
+    CartModel _item = Provider.of<CartModel>(context);
     return new Center(
       child: new Padding(
         padding: const EdgeInsets.only(top: 60.0),
@@ -34,11 +36,14 @@ class _ItemCardState extends State<ItemCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: Text(widget.food.name,
-                        style: const TextStyle(
-                            fontSize: 21.0,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Dosis')),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(widget.food.name,
+                          style: const TextStyle(
+                              fontSize: 21.0,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Dosis')),
+                    ),
                   ),
                   Expanded(
 //                    height: 100,
@@ -47,11 +52,15 @@ class _ItemCardState extends State<ItemCard> {
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.only(top: 0),
-                          child: SmoothStarRating(
-                            onRatingChanged: null,
-                            color: Colors.amber,
-                            starCount: 5,
-                            rating: _rating,
+                          child: GestureDetector(
+                            onTap: null,
+                            onHorizontalDragUpdate: null,
+                            child: SmoothStarRating(
+                              onRatingChanged: null,
+                              color: Colors.amber,
+                              starCount: 5,
+                              rating: widget.food.stars,
+                            ),
                           ),
                         ),
                       ],
@@ -68,7 +77,7 @@ class _ItemCardState extends State<ItemCard> {
                           minWidth: 70.0,
                           onPressed: null,
                           color: Colors.grey[900],
-                          child: new Text(widget.food.price,
+                          child: new Text(widget.food.price.toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 17.0,
@@ -84,9 +93,8 @@ class _ItemCardState extends State<ItemCard> {
                         children: <Widget>[
                           new IconButton(
                             icon: new Icon(Icons.remove),
-                            onPressed: widget.food.quantity == 0
-                                ? null
-                                : widget.decrement,
+                            onPressed: () =>
+                                _item.quanity == 0 ? null : _item.decrement(),
                           ),
                           new Container(
                             decoration: new BoxDecoration(
@@ -99,7 +107,7 @@ class _ItemCardState extends State<ItemCard> {
                               width: 70.0,
                               height: 45.0,
                               child: new Center(
-                                  child: new Text('${widget.food.quantity}',
+                                  child: new Text('${_item.quanity}',
                                       style:
                                           Theme.of(context).textTheme.subhead,
                                       textAlign: TextAlign.center)),
@@ -107,7 +115,7 @@ class _ItemCardState extends State<ItemCard> {
                           ),
                           new IconButton(
                             icon: new Icon(Icons.add),
-                            onPressed: widget.increment,
+                            onPressed: () => _item.increment(),
                           ),
                         ],
                       ),
@@ -118,11 +126,29 @@ class _ItemCardState extends State<ItemCard> {
                     child: Container(
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: CartButton(
-                          counter: widget.food.quantity,
+                          counter: _item.quanity,
                           addToCart: () {
-//
-//                          onChangeNicoFoodItem(index, 0, food);
-//                          playAnimation();
+                            Provider.of<CartModel>(context)
+                                .listKey
+                                .currentState
+                                .insertItem(_item.listOfCartItems.length);
+
+                            _item.listOfCartItems.add(CartItem(
+                                foodName: widget.food.name,
+                                itemImage: widget.food.image,
+                                foodPrice: widget.food.price,
+                                itemQTY: _item.quanity,
+                                itemId: widget.food.id));
+
+                            _item.notifyListeners();
+
+//                            debugPrint('list of cart items length is : ' +
+//                                _item.listOfCartItems.length.toString());
+//                            debugPrint('Cart zero item qty is : ' +
+//                                _item.listOfCartItems[0].itemQTY.toString());
+//                            debugPrint(
+//                                'second item food name is : ${_item.listOfCartItems[1].foodName} and price '
+//                                'is:${_item.listOfCartItems[1].foodPrice}');
                           }),
                     ),
                   ),

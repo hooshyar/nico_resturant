@@ -9,12 +9,12 @@ import 'package:nico_resturant/src/style/style.dart';
 import 'package:nico_resturant/src/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class HomeWidget extends StatefulWidget {
+class TheFoodPage extends StatefulWidget {
   @override
-  _HomeWidgetState createState() => _HomeWidgetState();
+  _TheFoodPageState createState() => _TheFoodPageState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
+class _TheFoodPageState extends State<TheFoodPage> {
   final PageController _pageController = PageController(viewportFraction: 0.7);
   final _db = DatabaseService();
   List<int> todayNumbers = [250, 160, 90];
@@ -45,7 +45,9 @@ class _HomeWidgetState extends State<HomeWidget> {
     return Container(
       child: Column(children: <Widget>[
         Expanded(
-          child: MenuPager(),
+          child: MenuPager(
+            type: 'drink',
+          ),
 
 //          child: Row(
 //            children: <Widget>[

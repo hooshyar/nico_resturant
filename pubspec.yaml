@@ -53,6 +53,7 @@ flutter:
 
   assets:
     - lib/assets/
+    - lib/assets/drinks/
     - lib/assets/images/menu1.png
     - lib/assets/images/menu2.png
     - lib/assets/images/menu3.png

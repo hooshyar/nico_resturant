@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nico_resturant/src/style/style.dart';
 
 class CartButton extends StatelessWidget {
   CartButton({this.counter, this.addToCart});
@@ -16,7 +17,7 @@ class CartButton extends StatelessWidget {
         elevation: counter == 0 ? 10.0 : 5.0,
         color: counter == 0 ? Colors.grey[350] : Colors.amber,
         child: new Icon(const IconData(0xe807, fontFamily: 'fontello'),
-            size: 20.0, color: Colors.white),
+            size: 20.0, color: secondColor),
       ),
     );
   }

@@ -3,8 +3,8 @@ import 'package:nico_resturant/src/models/food.dart';
 import 'package:nico_resturant/src/models/menu.dart';
 
 class DetailPage extends StatelessWidget {
-  final NicoFood food;
-  DetailPage(String id) : food = Menu.getNicoFoodById(id);
+  final NicoItem food;
+  DetailPage(String id) : food = Menu.getNicoItemById(id);
 
   @override
   Widget build(BuildContext context) {
