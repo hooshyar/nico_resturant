@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.dark,
-          fontFamily: 'Noto Kufi Arabic',
+          fontFamily: 'Dosisd',
           primarySwatch: Colors.brown,
         ),
         home: SplashScreen(),
@@ -92,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
   PageController _pageController = PageController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   Widget _theCartWidget = Container();
+
 //  GlobalKey _pageViewKey = GlobalKey();
   bool _showSecond = false;
   int _selectedIndex = 0;
@@ -260,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Positioned(
-                  bottom: 30, right: 30, left: 30, child: _footerCart(_theCart))
+                  bottom: 0, right: 15, left: 15, child: _footerCart(_theCart))
             ],
           )),
     );
@@ -268,38 +269,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _footerCart(CartModel _theCart) {
     return Container(
-      height: 200,
+      padding: EdgeInsets.only(bottom: 10),
+      height: 130,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Column(
           children: <Widget>[
             Expanded(
               child: AnimatedCrossFade(
-                duration: Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 300),
                 crossFadeState: _theCart.listOfCartItems.isEmpty
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
 //                child: _theCart.listOfCartItems.isEmpty
                 firstChild: Container(),
                 secondChild: Container(
-                  height: 200,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                            margin: EdgeInsets.all(20),
-                            color: secondColor,
-                            child: AnimatedList(
-                                key: _listKey,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index, animation) {
-                                  CartItem _theItem =
-                                      _theCart.listOfCartItems[index];
-                                  return _buildItem(
-                                      context, _theItem, animation);
-                                })),
-                      ),
-                    ],
+                  height: 150,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                      margin: EdgeInsets.all(2.0),
+//                                      color: secondColor.withOpacity(0.4),
+                                      decoration:
+                                          BoxDecoration(color: mainColor),
+//                                          boxShadow: [globalBoxShadow]),
+                                      child: AnimatedList(
+                                          key: _listKey,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder:
+                                              (context, index, animation) {
+                                            CartItem _theItem =
+                                                _theCart.listOfCartItems[index];
+                                            return _buildItem(
+                                                context, _theItem, animation);
+                                          })),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -312,37 +329,142 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildItem(
       BuildContext context, CartItem item, Animation<double> animation) {
+    CartModel _theCart = Provider.of<CartModel>(context);
     return Container(
       child: FadeTransition(
         opacity: animation.drive(Tween(begin: 0.0, end: 1.0)),
-        child: SizedBox(
-          height: 200,
-          child: Container(
-              margin: EdgeInsets.all(10),
-              color: Colors.black38,
-              child: Stack(
-                children: <Widget>[
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(FontAwesomeIcons.windowClose),
+        child: Stack(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 2 / 2,
+                  child: SizedBox(
+                    child: Stack(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Expanded(flex: 1, child: Container()),
+                            Expanded(
+                              flex: 10,
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    boxShadow: [globalBoxShadow],
+                                    color: Colors.black38,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 12.0),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Container(
+                                  height: 20,
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      Text(
+                                        item.foodName,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(item.itemImage),
-                        height: 100.0,
-                        width: 100.0,
+                ),
+              ],
+            ),
+
+//                Container(
+//                  padding: EdgeInsets.only(right: 5, top: 2),
+//                  alignment: Alignment.bottomLeft,
+//                  child: Image(
+//                    image: AssetImage(item.itemImage),
+//                    height: 65.0,
+//                    width: 65.0,
+//                  ),
+//                ),
+
+            Positioned(
+              top: 5,
+              right: 0,
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(colors: [
+                      Colors.red.withOpacity(0.8),
+                      expiredSecondColor.withOpacity(0.9)
+                    ])),
+                height: 35,
+                width: 35,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: IconButton(
+                    onPressed: () {
+                      _removeItem(item, _theCart);
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.minus,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              bottom: 25,
+              left: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        'X' + item.itemQTY.toString(),
+                        style: TextStyle(fontSize: 26),
+                        textAlign: TextAlign.center,
                       ),
-                      Text(item.foodName),
-                    ],
+                    ),
                   ),
                 ],
-              )),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
+  void _removeItem(CartItem theItem, CartModel theCart) {
+    var _itemIndex;
+
+    for (int i = 0; i < theCart.listOfCartItems.length; i++) {
+      if (theCart.listOfCartItems[i].itemId == theItem.itemId) {
+        _itemIndex = i;
+      }
+    }
+    theCart.listOfCartItems.removeAt(_itemIndex);
+
+    _listKey.currentState.removeItem(
+      _itemIndex,
+      (BuildContext context, Animation<double> animation) =>
+          _buildItem(context, theItem, animation),
+      duration: const Duration(milliseconds: 250),
+    );
+  }
 //  void _addAnItem() {
 //    _data.insert(0, WordPair.random().toString());
 //    listKey.currentState.insertItem(0);

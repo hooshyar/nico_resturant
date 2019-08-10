@@ -52,9 +52,7 @@ class _ItemCardState extends State<ItemCard> {
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.only(top: 0),
-                          child: GestureDetector(
-                            onTap: null,
-                            onHorizontalDragUpdate: null,
+                          child: AbsorbPointer(
                             child: SmoothStarRating(
                               onRatingChanged: null,
                               color: Colors.amber,
