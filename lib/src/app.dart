@@ -131,8 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
       onWillPop: () async => false,
 
       child: Scaffold(
+          drawerScrimColor: Colors.transparent,
           key: scaffoldKey,
-//            endDrawer: theEndDrawer(),
           backgroundColor: secondColor,
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: secondColor,
@@ -261,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Positioned(
-                  bottom: 0, right: 15, left: 15, child: _footerCart(_theCart))
+                  bottom: 0, right: 0, left: 0, child: _footerCart(_theCart))
             ],
           )),
     );
@@ -270,36 +270,38 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _footerCart(CartModel _theCart) {
     return Container(
       padding: EdgeInsets.only(bottom: 10),
-      height: 130,
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: AnimatedCrossFade(
-                duration: Duration(milliseconds: 300),
-                crossFadeState: _theCart.listOfCartItems.isEmpty
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
+      height: 140,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: AnimatedCrossFade(
+              duration: Duration(milliseconds: 300),
+              crossFadeState: _theCart.listOfCartItems.isEmpty
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
 //                child: _theCart.listOfCartItems.isEmpty
-                firstChild: Container(),
-                secondChild: Container(
-                  height: 150,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                      margin: EdgeInsets.all(2.0),
+              firstChild: Container(),
+              secondChild: Container(
+                height: 160,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 10,
+                      child: ClipRRect(
+                        clipBehavior: Clip.antiAlias,
+                        borderRadius: BorderRadius.all(Radius.circular(13)),
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    margin: EdgeInsets.all(2.0),
 //                                      color: secondColor.withOpacity(0.4),
-                                      decoration:
-                                          BoxDecoration(color: mainColor),
+                                    decoration:
+                                        BoxDecoration(color: Colors.grey[800]),
 //                                          boxShadow: [globalBoxShadow]),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(0.0),
                                       child: AnimatedList(
                                           key: _listKey,
                                           scrollDirection: Axis.horizontal,
@@ -309,20 +311,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 _theCart.listOfCartItems[index];
                                             return _buildItem(
                                                 context, _theItem, animation);
-                                          })),
-                                ),
-                              ],
-                            ),
+                                          }),
+                                    )),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+//                          borderRadius: BorderRadius.all(Radius.circular(20)),
+//                          clipBehavior: Clip.antiAlias,
+                          child: _floatingActionsBtns(_theCart),
+                        )),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -344,33 +353,31 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Expanded(flex: 1, child: Container()),
                             Expanded(
-                              flex: 10,
                               child: Container(
                                 margin: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                     boxShadow: [globalBoxShadow],
-                                    color: Colors.black38,
+                                    color: secondColor,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
+                                        BorderRadius.all(Radius.circular(10))),
                               ),
                             ),
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(left: 15, top: 5),
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 12.0),
+                            padding: const EdgeInsets.only(top: 15.0),
                             child: Align(
-                                alignment: Alignment.center,
+                                alignment: Alignment.topLeft,
                                 child: Container(
                                   height: 20,
                                   child: Wrap(
                                     children: <Widget>[
                                       Text(
                                         item.foodName,
-                                        textAlign: TextAlign.center,
+                                        textAlign: TextAlign.left,
                                         overflow: TextOverflow.clip,
                                       ),
                                     ],
@@ -384,30 +391,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-
-//                Container(
-//                  padding: EdgeInsets.only(right: 5, top: 2),
-//                  alignment: Alignment.bottomLeft,
-//                  child: Image(
-//                    image: AssetImage(item.itemImage),
-//                    height: 65.0,
-//                    width: 65.0,
-//                  ),
-//                ),
-
             Positioned(
-              top: 5,
-              right: 0,
+              bottom: 5,
+              left: 0,
+              child: Container(
+                child: Image(
+                  image: AssetImage(item.itemImage),
+                  height: 60.0,
+                  width: 60.0,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 1,
+              right: 2,
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
                     gradient: LinearGradient(colors: [
                       Colors.red.withOpacity(0.8),
                       expiredSecondColor.withOpacity(0.9)
                     ])),
-                height: 35,
-                width: 35,
+                height: 25,
+                width: 25,
                 child: Container(
                   alignment: Alignment.center,
                   child: IconButton(
@@ -416,25 +423,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     icon: Icon(
                       FontAwesomeIcons.minus,
-                      size: 18,
+                      size: 10,
                     ),
                   ),
                 ),
               ),
             ),
             Positioned(
-              right: 0,
-              bottom: 25,
+              right: 15,
+              bottom: 15,
               left: 0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Container(
                     child: Container(
-                      alignment: Alignment.bottomCenter,
+                      alignment: Alignment.bottomRight,
                       child: Text(
                         'X' + item.itemQTY.toString(),
-                        style: TextStyle(fontSize: 26),
+                        style: TextStyle(fontSize: 22),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -463,6 +470,65 @@ class _MyHomePageState extends State<MyHomePage> {
       (BuildContext context, Animation<double> animation) =>
           _buildItem(context, theItem, animation),
       duration: const Duration(milliseconds: 250),
+    );
+  }
+
+  _floatingActionsBtns(CartModel theCart) {
+    return Container(
+      height: 160,
+      child: ClipRRect(
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.all(Radius.circular(13)),
+        child: Container(
+          margin: EdgeInsets.only(right: 5, left: 5),
+          color: Colors.grey[800],
+          padding: EdgeInsets.only(right: 5.0, bottom: 5, top: 5, left: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                child: AnimatedCrossFade(
+                  duration: Duration(milliseconds: 200),
+                  crossFadeState: theCart.listOfCartItems.isEmpty
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  firstChild: Container(),
+                  secondChild: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Container(
+                            color: Colors.amber,
+                            child: Text('btn2'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Divider(height: 5),
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  child: Container(
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: Container(
+                        color: Colors.amber,
+                        child: Text('btn1'),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 //  void _addAnItem() {
