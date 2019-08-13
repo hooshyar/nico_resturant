@@ -25,7 +25,6 @@ class Food {
   Food.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
-  @override
   bool selected = false;
 }
 
@@ -54,6 +53,5 @@ class Drink {
   Drink.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
-  @override
   bool selected = false;
 }

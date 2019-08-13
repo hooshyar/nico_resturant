@@ -24,7 +24,7 @@ class _MenuPagerState extends State<MenuPager> with TickerProviderStateMixin {
 
   final PageController _backgroundPageController =
       PageController(viewportFraction: 1);
-  final PageController _pageController = PageController(viewportFraction: 0.2);
+  final PageController _pageController = PageController();
   Color _backColor = const Color.fromRGBO(240, 232, 223, 1.0);
   int _cartQuantity = 0;
   bool firstEntry = true;

@@ -25,7 +25,6 @@ import 'services/db.dart';
 
 class MyApp extends StatelessWidget {
   final db = DatabaseService();
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -91,10 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<AnimatedListState> _listKey = GlobalKey();
   PageController _pageController = PageController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  Widget _theCartWidget = Container();
 
-//  GlobalKey _pageViewKey = GlobalKey();
-  bool _showSecond = false;
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -109,17 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-//        _pageController.jumpToPage(3);
       _pageController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.easeInCubic);
       _selectedIndex = index;
-//      _moveBottomNav(index);
     });
   }
-
-//  void _moveBottomNav(int index) {
-//    _selectedIndex = index;
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,9 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
           drawerScrimColor: Colors.transparent,
           key: scaffoldKey,
-          backgroundColor: secondColor,
+//          backgroundColor: secondColor,
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: secondColor,
+//            backgroundColor: secondColor,
             unselectedFontSize: 0,
             selectedFontSize: 16,
             iconSize: 32,
@@ -279,7 +269,6 @@ class _MyHomePageState extends State<MyHomePage> {
               crossFadeState: _theCart.listOfCartItems.isEmpty
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
-//                child: _theCart.listOfCartItems.isEmpty
               firstChild: Container(),
               secondChild: Container(
                 height: 160,
@@ -322,8 +311,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         flex: 1,
                         child: Container(
-//                          borderRadius: BorderRadius.all(Radius.circular(20)),
-//                          clipBehavior: Clip.antiAlias,
                           child: _floatingActionsBtns(_theCart),
                         )),
                   ],
@@ -531,43 +518,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-//  void _addAnItem() {
-//    _data.insert(0, WordPair.random().toString());
-//    listKey.currentState.insertItem(0);
-//  }
-//
-//  void _removeLastItem() {
-//    String itemToRemove = _data[0];
-//
-//    listKey.currentState.removeItem(
-//      0,
-//      (BuildContext context, Animation<double> animation) =>
-//          _buildItem(context, itemToRemove, animation),
-//      duration: const Duration(milliseconds: 250),
-//    );
-//
-//    _data.removeAt(0);
-//  }
-//
-//  void _removeAllItems() {
-//    final int itemCount = _data.length;
-//
-//    for (var i = 0; i < itemCount; i++) {
-//      String itemToRemove = _data[0];
-//      listKey.currentState.removeItem(
-//        0,
-//        (BuildContext context, Animation<double> animation) =>
-//            _buildItem(context, itemToRemove, animation),
-//        duration: const Duration(milliseconds: 250),
-//      );
-//
-//      _data.removeAt(0);
-//    }
-//  }
-
-//  Future<CrossFadeState> _waitPlease() async {
-//    await Future.delayed(Duration(seconds: 2)).then((onValue) {
-//      return CrossFadeState.showSecond;
-//    });
-//  }
 }
