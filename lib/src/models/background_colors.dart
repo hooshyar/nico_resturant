@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 List<Color> colors = <Color>[
-  const Color.fromRGBO(240, 232, 223, 1.0),
+  const Color.fromRGBO(230, 210, 188, 1.0),
+//    RGB(231, 222, 211, 1.0)
   const Color.fromRGBO(214, 214, 198, 1.0),
   const Color.fromRGBO(209, 205, 190, 1.0),
   const Color.fromRGBO(239, 233, 219, 1.0),

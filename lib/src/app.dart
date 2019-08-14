@@ -19,6 +19,8 @@ import 'package:nico_resturant/src/services/cart.dart';
 import 'package:nico_resturant/src/services/connectivity.dart';
 import 'package:nico_resturant/src/services/fetch_data.dart';
 import 'package:nico_resturant/src/style/style.dart';
+import 'package:nico_resturant/src/widgets/animated_transition.dart';
+import 'package:nico_resturant/src/widgets/cart_button.dart';
 import 'package:provider/provider.dart';
 
 import 'services/db.dart';
@@ -87,9 +89,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Widget _theChangW = Text(
+    'hellp',
+    style: TextStyle(color: Colors.black),
+  );
+
   GlobalKey<AnimatedListState> _listKey = GlobalKey();
   PageController _pageController = PageController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  Color _theChangeableColor = Colors.grey[800];
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
@@ -198,54 +206,78 @@ class _MyHomePageState extends State<MyHomePage> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  height: 200,
+                  height: 120,
                   decoration: BoxDecoration(color: Colors.transparent),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: FlatButton.icon(
-                              onPressed: () =>
-                                  Navigator.of(context).pushNamed('/SellForm'),
-                              label: Text(
-                                'add',
-                                style: TextStyle(color: secondColor),
-                              ),
-                              icon: Icon(
-                                FontAwesomeIcons.plus,
-                                color: secondColor,
+                  child: SafeArea(
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 5, left: 5),
+                              alignment: Alignment.bottomLeft,
+                              child: AnimatedSwitcher(
+                                duration: Duration(milliseconds: 250),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  return ScaleTransition(
+                                      child: child, scale: animation);
+                                },
+                                child: _theCart.listOfCartItems.isNotEmpty
+                                    ? Container(
+                                        key: ValueKey(1),
+                                        child: headerBtns(
+                                            color: Colors.red,
+                                            icon: Icons.opacity,
+                                            text: 'Value 2',
+                                            onPressed: () {}))
+                                    : Container(
+                                        key: ValueKey(2),
+                                        child: headerBtns(
+                                            color: Colors.green,
+                                            icon: Icons.add,
+                                            text: 'Value 2',
+                                            onPressed: () {}),
+                                      ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'lib/assets/Nico_Logo.png',
-                              fit: BoxFit.fill,
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.all(20.0),
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                'lib/assets/Nico_Logo.png',
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                              alignment: Alignment.centerRight,
-                              child: IconButton(
-                                onPressed: () =>
-                                    Navigator.pushNamed(context, '/CartPage'),
-                                icon: Icon(
-                                  Icons.shopping_cart,
-                                  color: secondColor,
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 5, right: 5),
+                              alignment: Alignment.bottomRight,
+                              child: AnimatedContainer(
+                                duration: Duration(seconds: 3),
+                                child: FlatButton.icon(
+                                  textColor: Colors.green,
+                                  padding: EdgeInsets.all(20),
+//                                color: Colors.green,
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    FontAwesomeIcons.conciergeBell,
+                                    size: 24,
+                                  ),
+                                  label: Text(
+                                    'WAITER',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                 ),
-                              )
-//                            CartButton(),
                               ),
-                        ),
-                      ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -264,13 +296,8 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: AnimatedCrossFade(
-              duration: Duration(milliseconds: 300),
-              crossFadeState: _theCart.listOfCartItems.isEmpty
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              firstChild: Container(),
-              secondChild: Container(
+            child: TheAnimatedWidget(
+              child: Container(
                 height: 160,
                 child: Row(
                   children: <Widget>[
@@ -286,8 +313,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Container(
                                     margin: EdgeInsets.all(2.0),
 //                                      color: secondColor.withOpacity(0.4),
-                                    decoration:
-                                        BoxDecoration(color: Colors.grey[800]),
+//                                    decoration:
+//                                        BoxDecoration(color: Colors.grey[800]),
 //                                          boxShadow: [globalBoxShadow]),
                                     child: Padding(
                                       padding: const EdgeInsets.all(0.0),
@@ -308,11 +335,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                    Expanded(
-                        flex: 1,
-                        child: Container(
-                          child: _floatingActionsBtns(_theCart),
-                        )),
                   ],
                 ),
               ),
@@ -457,65 +479,6 @@ class _MyHomePageState extends State<MyHomePage> {
       (BuildContext context, Animation<double> animation) =>
           _buildItem(context, theItem, animation),
       duration: const Duration(milliseconds: 250),
-    );
-  }
-
-  _floatingActionsBtns(CartModel theCart) {
-    return Container(
-      height: 160,
-      child: ClipRRect(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(13)),
-        child: Container(
-          margin: EdgeInsets.only(right: 5, left: 5),
-          color: Colors.grey[800],
-          padding: EdgeInsets.only(right: 5.0, bottom: 5, top: 5, left: 5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                child: AnimatedCrossFade(
-                  duration: Duration(milliseconds: 200),
-                  crossFadeState: theCart.listOfCartItems.isEmpty
-                      ? CrossFadeState.showFirst
-                      : CrossFadeState.showSecond,
-                  firstChild: Container(),
-                  secondChild: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: AspectRatio(
-                          aspectRatio: 1 / 1,
-                          child: Container(
-                            color: Colors.amber,
-                            child: Text('btn2'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Divider(height: 5),
-              Container(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  child: Container(
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: Container(
-                        color: Colors.amber,
-                        child: Text('btn1'),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

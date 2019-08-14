@@ -90,8 +90,8 @@ final soonGradientColor = LinearGradient(colors: [
 final globalBoxShadow = BoxShadow(
     color: secondColor.withOpacity(0.5),
     blurRadius: 8.0,
-    offset: Offset(1.0, 1.0),
-    spreadRadius: 5.0);
+    offset: Offset(4.0, 1.0),
+    spreadRadius: 1.0);
 
 final globalBtnShadow = BoxShadow(
     color: secondColor.withOpacity(0.3),

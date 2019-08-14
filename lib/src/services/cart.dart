@@ -9,6 +9,8 @@ class CartModel extends ChangeNotifier {
   int _quanity = 0;
   int get quanity => _quanity;
 
+  Color changableColor = Colors.grey[800];
+
   final GlobalKey<AnimatedListState> listKey = GlobalKey();
   Cart _theCart;
   Cart get theCart => _theCart;
@@ -21,6 +23,12 @@ class CartModel extends ChangeNotifier {
   void addItemToCart(CartItem item) {
 //    var index = listOfCartItems.length + 1;
     listOfCartItems[0] = item;
+  }
+
+  void whatColor() {
+    if (listOfCartItems.isNotEmpty) {
+      changableColor = Colors.green;
+    }
   }
 
   void makeItZer() {

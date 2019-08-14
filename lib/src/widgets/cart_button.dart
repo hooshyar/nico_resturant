@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nico_resturant/src/style/style.dart';
 
@@ -21,4 +22,23 @@ class CartButton extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget headerBtns({Color color, String text, IconData icon, onPressed}) {
+  return Container(
+    width: 140,
+    height: 50,
+    child: FlatButton.icon(
+      textColor: color,
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        size: 24,
+      ),
+      label: Text(
+        text,
+        style: TextStyle(fontSize: 20),
+      ),
+    ),
+  );
 }

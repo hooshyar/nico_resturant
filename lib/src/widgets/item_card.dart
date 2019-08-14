@@ -24,13 +24,13 @@ class _ItemCardState extends State<ItemCard> {
     CartModel _item = Provider.of<CartModel>(context);
     return new Center(
       child: new Padding(
-        padding: const EdgeInsets.only(top: 60.0),
+        padding: const EdgeInsets.only(top: 0.0),
         child: new Card(
           elevation: 0.0,
           child: new Container(
-            height: math.min(350.0, MediaQuery.of(context).size.height),
+            height: math.min(400.0, MediaQuery.of(context).size.height),
             child: new Container(
-              padding: EdgeInsets.only(top: 100),
+              padding: EdgeInsets.only(top: 70),
               margin: const EdgeInsets.only(top: 20.0, bottom: 0.0),
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
