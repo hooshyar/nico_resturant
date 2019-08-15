@@ -218,26 +218,26 @@ class _MyHomePageState extends State<MyHomePage> {
                               padding: EdgeInsets.only(bottom: 5, left: 5),
                               alignment: Alignment.bottomLeft,
                               child: AnimatedSwitcher(
-                                duration: Duration(milliseconds: 250),
+                                duration: Duration(milliseconds: 180),
                                 transitionBuilder: (Widget child,
                                     Animation<double> animation) {
-                                  return ScaleTransition(
-                                      child: child, scale: animation);
+                                  return FadeTransition(
+                                      child: child, opacity: animation);
                                 },
-                                child: _theCart.listOfCartItems.isNotEmpty
+                                child: _theCart.listOfCartItems.isEmpty
                                     ? Container(
+                                        width: 50,
+                                        height: 50,
+                                        alignment: Alignment.centerLeft,
                                         key: ValueKey(1),
-                                        child: headerBtns(
-                                            color: Colors.red,
-                                            icon: Icons.opacity,
-                                            text: 'Value 2',
-                                            onPressed: () {}))
+                                        child: Container(),
+                                      )
                                     : Container(
                                         key: ValueKey(2),
                                         child: headerBtns(
                                             color: Colors.green,
-                                            icon: Icons.add,
-                                            text: 'Value 2',
+                                            icon: FontAwesomeIcons.check,
+                                            text: 'ORDER',
                                             onPressed: () {}),
                                       ),
                               ),
@@ -257,23 +257,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Container(
                               padding: EdgeInsets.only(bottom: 5, right: 5),
                               alignment: Alignment.bottomRight,
-                              child: AnimatedContainer(
-                                duration: Duration(seconds: 3),
-                                child: FlatButton.icon(
-                                  textColor: Colors.green,
-                                  padding: EdgeInsets.all(20),
-//                                color: Colors.green,
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    FontAwesomeIcons.conciergeBell,
-                                    size: 24,
-                                  ),
-                                  label: Text(
-                                    'WAITER',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                              ),
+                              child: headerBtns(
+                                  color: secondColor,
+                                  icon: FontAwesomeIcons.conciergeBell,
+                                  text: 'WAITER',
+                                  onPressed: () {}),
                             ),
                           ),
                         ],

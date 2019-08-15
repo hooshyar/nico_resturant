@@ -126,6 +126,8 @@ class _ItemCardState extends State<ItemCard> {
                       child: CartButton(
                           counter: _item.quanity,
                           addToCart: () {
+
+
                             Provider.of<CartModel>(context)
                                 .listKey
                                 .currentState
