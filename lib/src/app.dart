@@ -89,11 +89,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Widget _theChangW = Text(
-    'hellp',
-    style: TextStyle(color: Colors.black),
-  );
-
   GlobalKey<AnimatedListState> _listKey = GlobalKey();
   PageController _pageController = PageController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

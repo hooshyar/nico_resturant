@@ -61,47 +61,37 @@ class _MenuPagerState extends State<MenuPager> with TickerProviderStateMixin {
       children: <Widget>[
         Positioned.fill(
             child: Container(decoration: BoxDecoration(color: _backColor))),
-        PageView.builder(
-          itemCount: typeItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            if (typeItems.length == 0) {
-              debugPrint('is emtpy');
-              return Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      color: Colors.black87,
-                      child: Center(
-                        child: Text(
-                          'Empty',
-                          style: TextStyle(fontSize: 45),
+        typeItems.isEmpty
+            ? Container(
+                alignment: Alignment.center,
+                child: Text(
+                  'No Item found sorry!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 45),
+                ),
+              )
+            : PageView.builder(
+                itemCount: typeItems.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: _contentWidget(
+                              typeItems[index], index, Alignment.center, 2.0),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: _contentWidget(
-                          typeItems[index], index, Alignment.center, 2.0),
-                    ),
-                  ),
-                ],
-              );
-            }
-          },
-          controller: _backgroundPageController,
-          onPageChanged: (index) {
-            _item.makeItZer();
-            setState(() {
-              _backColor = colors[math.Random().nextInt(colors.length)];
-            });
-          },
-        ),
+                    ],
+                  );
+                },
+                controller: _backgroundPageController,
+                onPageChanged: (index) {
+                  _item.makeItZer();
+                  setState(() {
+                    _backColor = colors[math.Random().nextInt(colors.length)];
+                  });
+                },
+              ),
       ],
     );
   }
