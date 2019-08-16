@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:nico_resturant/src/config/config.dart';
 import 'package:nico_resturant/src/models/cart_model.dart';
 import 'package:nico_resturant/src/models/food.dart';
 import 'package:nico_resturant/src/services/cart.dart';
@@ -75,7 +76,8 @@ class _ItemCardState extends State<ItemCard> {
                           minWidth: 70.0,
                           onPressed: null,
                           color: Colors.grey[900],
-                          child: new Text(widget.food.price.toString(),
+                          child: new Text(
+                              widget.food.price.toString() + ' $moneySign',
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 17.0,
