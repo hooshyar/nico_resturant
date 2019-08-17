@@ -18,7 +18,7 @@ class _TheAnimatedWidgetState extends State<TheAnimatedWidget>
   void initState() {
     super.initState();
     animController = AnimationController(
-      duration: Duration(seconds: 5),
+      duration: Duration(milliseconds: 300),
       vsync: this,
     );
 

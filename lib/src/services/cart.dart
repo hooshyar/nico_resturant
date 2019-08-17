@@ -14,11 +14,21 @@ class CartModel extends ChangeNotifier {
   final GlobalKey<AnimatedListState> listKey = GlobalKey();
   Cart _theCart;
   Cart get theCart => _theCart;
+
+  @override
+  String _theCartSit = 'open';
+  String get theCartSit => _theCartSit;
+
 //
   CartItem _cartItem;
   CartItem get cartItem => _cartItem;
 //
   var listOfCartItems = [];
+
+  void changeTheSit({String sit}) {
+    _theCartSit = sit;
+//    notifyListeners();
+  }
 
   void addItemToCart(CartItem item) {
 //    var index = listOfCartItems.length + 1;

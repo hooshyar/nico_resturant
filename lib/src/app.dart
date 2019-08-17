@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.dark,
-          fontFamily: 'Dosisd',
+          fontFamily: 'Dosis',
           primarySwatch: Colors.brown,
         ),
         home: SplashScreen(),
@@ -201,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  height: 120,
+                  height: 130,
                   decoration: BoxDecoration(color: Colors.transparent),
                   child: SafeArea(
                     child: Container(
@@ -229,11 +229,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                       )
                                     : Container(
                                         key: ValueKey(2),
-                                        child: headerBtns(
-                                            color: Colors.green,
-                                            icon: FontAwesomeIcons.check,
-                                            text: 'ORDER',
-                                            onPressed: () {}),
+                                        child: whichBtn(theCart: _theCart),
+
+//                                        headerBtns(
+//                                                color: Colors.green,
+//                                                icon: FontAwesomeIcons.check,
+//                                                text: 'ORDER',
+//                                                onPressed: () {})
+//                                            : headerBtns(
+//                                                color: Colors.blue,
+//                                                text: 'BILL',
+//                                                icon:
+//                                                    FontAwesomeIcons.moneyBill,
+//                                                onPressed: () {}),
                                       ),
                               ),
                             ),
@@ -270,6 +278,51 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           )),
     );
+  }
+
+  Widget whichBtn({CartModel theCart}) {
+    if (theCart.listOfCartItems.isEmpty) {
+      theCart.changeTheSit(sit: 'empty');
+    }
+    if (theCart.listOfCartItems.isNotEmpty &&
+        theCart.theCartSit != 'placed' &&
+        theCart.theCartSit != 'done') {
+      theCart.changeTheSit(sit: 'order');
+    }
+
+    if (theCart.theCartSit == 'order') {
+      return TheAnimatedWidget(
+        child: headerBtns(
+            color: Colors.green,
+            icon: FontAwesomeIcons.check,
+            text: 'ORDER',
+            onPressed: () {
+              theCart.changeTheSit(sit: 'placed');
+              theCart.notifyListeners();
+            }),
+      );
+    }
+    if (theCart.theCartSit == 'placed') {
+      return TheAnimatedWidget(
+        child: headerBtns(
+            color: Colors.blue,
+            icon: FontAwesomeIcons.fileInvoice,
+            text: 'BILL',
+            onPressed: () {
+              return _billPagePop();
+//              Navigator.of(context).pushNamed('/CartPage');
+            }),
+      );
+    }
+    if (theCart.theCartSit == 'done') {
+      return TheAnimatedWidget(
+        child: headerBtns(
+            color: Colors.green,
+            icon: FontAwesomeIcons.check,
+            text: 'REVIEW',
+            onPressed: () {}),
+      );
+    }
   }
 
   Widget _footerCart(CartModel _theCart) {
@@ -447,6 +500,22 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+//  billPageDialog() {}
+  Future<void> _billPagePop() async {
+    await showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              child: TheAnimatedWidget(
+                  child: Container(
+                      color: secondColor,
+                      height: 700,
+                      width: 500,
+                      child: CartPage())));
+        });
+  }
+
   void _removeItem(CartItem theItem, CartModel theCart) {
     var _itemIndex;
 
@@ -456,6 +525,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
     theCart.listOfCartItems.removeAt(_itemIndex);
+    theCart.notifyListeners();
 
     _listKey.currentState.removeItem(
       _itemIndex,
