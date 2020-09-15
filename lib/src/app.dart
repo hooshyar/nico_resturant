@@ -1,16 +1,13 @@
-import 'dart:core';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nico_resturant/src/models/cart_model.dart';
 import 'package:nico_resturant/src/screen/cart_page.dart';
 import 'package:nico_resturant/src/screen/login.dart';
 import 'package:nico_resturant/src/screen/pager.dart';
 import 'package:nico_resturant/src/screen/sell_form.dart';
+import 'package:nico_resturant/src/screen/setting_screen.dart';
 import 'package:nico_resturant/src/screen/splash_screen.dart';
 import 'package:nico_resturant/src/services//loading_model.dart';
 import 'package:nico_resturant/src/services/bottom_nav_model.dart';
@@ -18,6 +15,7 @@ import 'package:nico_resturant/src/services/calculate_Totals.dart';
 import 'package:nico_resturant/src/services/cart.dart';
 import 'package:nico_resturant/src/services/connectivity.dart';
 import 'package:nico_resturant/src/services/fetch_data.dart';
+import 'package:nico_resturant/src/services/setting_model.dart';
 import 'package:nico_resturant/src/style/style.dart';
 import 'package:nico_resturant/src/widgets/animated_transition.dart';
 import 'package:nico_resturant/src/widgets/cart_button.dart';
@@ -43,6 +41,11 @@ class MyApp extends StatelessWidget {
         ///Loading Provider , to change the ui when data is loading
         ChangeNotifierProvider(
           builder: (context) => LoadingModel(),
+        ),
+
+        ///Setting Provider
+        ChangeNotifierProvider(
+          builder: (context) => SettingModel(),
         ),
 
         ///Loading Provider , to change the ui when data is loading
@@ -116,6 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SettingModel settingProvider = Provider.of<SettingModel>(context);
+
     _listKey = Provider.of<CartModel>(context).listKey;
     final bottomNavIndex = Provider.of<BottomNav>(context);
     CartModel _theCart = Provider.of<CartModel>(context, listen: true);
@@ -126,6 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
           drawerScrimColor: Colors.transparent,
           key: scaffoldKey,
+          floatingActionButton: RaisedButton(
+            child: Text('setting'),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingScreen())),
+          ),
 //          backgroundColor: secondColor,
           bottomNavigationBar: BottomNavigationBar(
 //            backgroundColor: secondColor,
