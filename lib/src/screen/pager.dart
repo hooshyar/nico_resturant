@@ -6,11 +6,11 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:nico_resturant/src/models/background_colors.dart';
 import 'package:nico_resturant/src/models/food.dart';
 import 'package:nico_resturant/src/models/menu.dart';
+import 'package:nico_resturant/src/screen/item_router.dart';
 import 'package:nico_resturant/src/services/cart.dart';
 import 'package:nico_resturant/src/services/setting_model.dart';
 import 'package:nico_resturant/src/widgets/food_image.dart';
 import 'package:nico_resturant/src/widgets/item_card.dart';
-import 'package:nico_resturant/src/widgets/item_card_grid.dart';
 import 'package:nico_resturant/src/widgets/shadows.dart';
 import 'package:provider/provider.dart';
 
@@ -100,11 +100,11 @@ class _MenuPagerState extends State<MenuPager> with TickerProviderStateMixin {
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
                                 child: Container(
-                                  child: _contentWidgetGridView(
-                                      typeItems[index],
-                                      index,
-                                      Alignment.center,
-                                      2.0),
+                                  child: ItemRouter(
+                                      food: typeItems[index],
+                                      index: index,
+                                      alignment: Alignment.center,
+                                      resize: 2.0),
                                 ),
                               );
                             },
@@ -174,53 +174,6 @@ class _MenuPagerState extends State<MenuPager> with TickerProviderStateMixin {
                       food: food,
                       height: 250,
                       width: 250,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _contentWidgetGridView(
-      NicoItem food, int index, Alignment alignment, double resize) {
-    return SafeArea(
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(top: 0),
-                alignment: alignment,
-                // width: 170.0 * resize,
-                // height: 170.0 * resize,
-                child: Stack(
-                  children: <Widget>[
-                    shadow2,
-                    shadow1,
-                    Stack(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(top: 50, left: 35, right: 10),
-                          child: ItemCardGrid(
-                            food: food,
-
-//                              onChangeNicoItemItem(index, _counter, food);
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 0),
-                      child: FoodImage(
-                        imageAlign: FractionalOffset.topCenter,
-                        food: food,
-                        height: 180,
-                        width: 180,
-                      ),
                     ),
                   ],
                 ),

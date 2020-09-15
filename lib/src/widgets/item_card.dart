@@ -20,6 +20,7 @@ class ItemCard extends StatefulWidget {
 
 class _ItemCardState extends State<ItemCard> {
   var _rating = 5.0;
+  int _quanity = 0;
   @override
   Widget build(BuildContext context) {
     CartModel _item = Provider.of<CartModel>(context);
@@ -92,10 +93,14 @@ class _ItemCardState extends State<ItemCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           new IconButton(
-                            icon: new Icon(Icons.remove),
-                            onPressed: () =>
-                                _item.quanity == 0 ? null : _item.decrement(),
-                          ),
+                              icon: new Icon(Icons.remove),
+                              onPressed: () {
+                                _quanity == 0
+                                    ? null
+                                    : setState(() {
+                                        _quanity--;
+                                      });
+                              }),
                           new Container(
                             decoration: new BoxDecoration(
                               border: new Border.all(
@@ -107,16 +112,19 @@ class _ItemCardState extends State<ItemCard> {
                               width: 70.0,
                               height: 45.0,
                               child: new Center(
-                                  child: new Text('${_item.quanity}',
+                                  child: new Text('${_quanity}',
                                       style:
                                           Theme.of(context).textTheme.subhead,
                                       textAlign: TextAlign.center)),
                             ),
                           ),
                           new IconButton(
-                            icon: new Icon(Icons.add),
-                            onPressed: () => _item.increment(),
-                          ),
+                              icon: new Icon(Icons.add),
+                              onPressed: () {
+                                setState(() {
+                                  _quanity++;
+                                });
+                              }),
                         ],
                       ),
                     ),
@@ -126,7 +134,7 @@ class _ItemCardState extends State<ItemCard> {
                     child: Container(
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: CartButton(
-                          counter: _item.quanity,
+                          counter: _quanity,
                           addToCart: () {
                             Provider.of<CartModel>(context)
                                 .listKey
@@ -137,7 +145,7 @@ class _ItemCardState extends State<ItemCard> {
                                 foodName: widget.food.name,
                                 itemImage: widget.food.image,
                                 foodPrice: widget.food.price,
-                                itemQTY: _item.quanity,
+                                itemQTY: _quanity,
                                 itemId: widget.food.id));
 
                             _item.notifyListeners();
